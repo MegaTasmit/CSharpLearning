@@ -7,9 +7,9 @@ namespace FourthVideo
         public static void Main(string[] args)
         {
             decimal savedNumber = 0;
-            bool isEnd = false;
+            bool isContinue = false;
 
-            while (isEnd == false)
+            while (isContinue == false)
             {
                 decimal firstNumber = 0;
                 string operation = "";
@@ -69,7 +69,7 @@ namespace FourthVideo
                             break;
 
                         case "y":
-                            isEnd = true;
+                            isContinue = true;
                             Console.WriteLine("Благодарим Вас за использование нашего калькулятора!");
                             Thread.Sleep(1000);
                             break;
