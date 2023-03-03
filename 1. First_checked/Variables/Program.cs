@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecondVideo
+namespace Variables
 {
 
     public class Programm

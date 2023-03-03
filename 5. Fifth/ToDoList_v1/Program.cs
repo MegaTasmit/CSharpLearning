@@ -1,7 +1,6 @@
-﻿using SixthVideo;
-using System;
+﻿using System;
 
-namespace SixthVideo
+namespace ToDoList_v1
 {
 
     public class Programm
@@ -10,29 +9,6 @@ namespace SixthVideo
 
         public static void Main(string[] args)
         {
-            /*
-            ToDo List
-
-            1. Возможности
-            - Посмотреть список задач
-            - Добавить новую задачу
-            - Удалить задачу
-            - Пометить задачу как выполненную
-            - Взять задачу в работу
-            - Редактировать задачу
-
-            2. Задача
-            - Цель
-            - Дата создания
-            - Статус
-
-            3. Статус
-            - Новое
-            - В работе
-            - Выполнено
-
-            */
-
             _issueList = new IssueList(100);
             bool isEnd = false;
 
@@ -52,9 +28,9 @@ namespace SixthVideo
                                   $"5 - Взять задачу в работу\n" +
                                   $"6 - Пометить задачу как выполненную\n" +
                                   $"0 - Выйти");
-                
+
                 string userInput = Console.ReadLine();
-                switch(userInput)
+                switch (userInput)
                 {
                     case Operations.SHOW_ALL_ISSUES:
                         ShowIssues();
@@ -82,7 +58,7 @@ namespace SixthVideo
                         CompleteIssue();
                         break;
 
-                    case Operations.EXIT: 
+                    case Operations.EXIT:
                         isEnd = true;
 
                         Console.WriteLine("Благодарим Вас за использование приложения!");
@@ -218,13 +194,16 @@ namespace SixthVideo
 
             Issue[] issues = _issueList.GetIssues();
 
+            int inWorkIssueCount = 1;
+
             for (int i = 0; i < issues.Length; i++)
             {
                 if (issues[i].Status == Status.В_работе)
                 {
                     Console.SetCursorPosition(71, issueInWorkString);
-                    Console.WriteLine(issues[i].Title);
+                    Console.WriteLine(inWorkIssueCount + ". " + issues[i].Title);
                     issueInWorkString++;
+                    inWorkIssueCount++;
                 }
             }
 

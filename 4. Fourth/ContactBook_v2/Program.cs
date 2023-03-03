@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Xml.Linq;
 
-namespace FifthVideo
+namespace ContactBook_v2
 {
     public class Programm
     {
@@ -8,17 +9,17 @@ namespace FifthVideo
 
         public static void Main(string[] args)
         {
-            Welcome();
-
             _contactsLists = new ContactsList(100);
-            bool isEnd = false;
+            bool isContinue = true;
 
-            while (isEnd == false)
+            Interface.Welcome();
+
+            while (isContinue)
             {
                 Thread.Sleep(800);
                 Console.Clear();
 
-                MainInfo(_contactsLists.GetContactsCount());
+                Interface.MainInfo(_contactsLists.GetContactsCount());
 
                 Console.WriteLine($"Выберите действие:\n" +
                                   $"1 - Показать все контакты\n" +
@@ -52,7 +53,7 @@ namespace FifthVideo
                         break;
 
                     case Operation.EXIT:
-                        isEnd = true;
+                        isContinue = false;
                         Console.WriteLine("Благодарим за пользование приложением");
                         break;
 
@@ -81,20 +82,9 @@ namespace FifthVideo
 
         private static void AddNewContact()
         {
-            Console.Write("\nВведите имя: ");
-            string name = Console.ReadLine();
+            bool isInputCorrect = InputInformation(out string name, out string phoneNumber, out string adress);
 
-            Console.Write("\nВведите номер телефона: ");
-            string phoneNumber = Console.ReadLine();
-
-            Console.Write("\nВведите город проживания: ");
-            string adress = Console.ReadLine();
-
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(adress))
-            {
-                Console.WriteLine("Вы ввели некорректное значение! Добавить такой контакт невозможно");
-            }
-            else
+            if (isInputCorrect)
             {
                 Contact contact = new Contact(name, phoneNumber, adress);
                 _contactsLists.AddContact(contact);
@@ -102,6 +92,8 @@ namespace FifthVideo
                 Console.WriteLine("Контакт добавлен!");
             }
         }
+
+        
 
         private static string EditContact()
         {
@@ -112,24 +104,14 @@ namespace FifthVideo
 
             bool isNumberCorrect = int.TryParse(userInput, out int userChoice);
             userChoice -= 1;
+
             if (isNumberCorrect == true && userChoice >= 0 && userChoice < _contactsLists.GetContactsCount())
             {
                 Contact[] contact = _contactsLists.GetContacts();
 
-                Console.Write("\nУкажите новое имя: ");
-                string name = Console.ReadLine();
+                bool isInputCorrect = InputInformation(out string name, out string phoneNumber, out string adress);
 
-                Console.Write("\nУкажите новый номер телефона: ");
-                string phoneNumber = Console.ReadLine();
-
-                Console.Write("\nУкажите новый адрес: ");
-                string adress = Console.ReadLine();
-
-                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(adress))
-                {
-                    Console.WriteLine("Вы ввели некорректное значение! Внести такие корректировки невозможно");
-                }
-                else
+                if (isInputCorrect)
                 {
                     contact[userChoice].Name = name;
                     contact[userChoice].PhoneNumber = phoneNumber;
@@ -140,7 +122,7 @@ namespace FifthVideo
             }
             else
             {
-                Console.WriteLine("\nУказан некорректный номер контакта.");
+                Console.WriteLine($"\nУказан некорректный номер контакта.\nВы ввели: {userInput}");
             }
 
             return userInput;
@@ -165,34 +147,42 @@ namespace FifthVideo
             }
             else
             {
-                Console.WriteLine("\nУказан некорректный номер контакта.");
+                Console.WriteLine($"\nУказан некорректный номер контакта.\nВы ввели: {userInput}");
             }
 
             return userInput;
         }
 
-        private static void Welcome()
+        private static bool InputInformation(out string name, out string phoneNumber, out string adress)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\nВведите имя: ");
+            name = Console.ReadLine();
 
-            Console.SetCursorPosition(20, 7);
-            Console.WriteLine("Добро пожаловать в телефонную книгу!");
+            Console.Write("\nВведите номер телефона: ");
+            phoneNumber = Console.ReadLine();
 
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+            Console.Write("\nВведите город проживания: ");
+            adress = Console.ReadLine();
 
-        public static void MainInfo(int namesCount)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phoneNumber) || string.IsNullOrEmpty(adress))
+            {
+                Console.WriteLine("\nВы ввели некорректное значение!");
 
-            Console.SetCursorPosition(10, 0);
-            Console.WriteLine("Телефонная книга");
+                if (string.IsNullOrEmpty(name))
+                    Console.WriteLine($"Указано некорректное имя. Поле пустое.");
+                if (string.IsNullOrEmpty(phoneNumber))
+                    Console.WriteLine($"Указано некорректный номер телефона. Поле пустое");
+                if (string.IsNullOrEmpty(adress))
+                    Console.WriteLine($"Указано некорректный город проживания. Поле пустое");
 
+                Console.ReadKey();
 
-            Console.SetCursorPosition(50, 0);
-            Console.WriteLine($"Количество записей: {namesCount}");
-
-            Console.ForegroundColor = ConsoleColor.White;
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

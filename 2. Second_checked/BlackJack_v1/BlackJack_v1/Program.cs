@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlackJack_Demo
+namespace BlackJack_v1
 {
     public class Program
     {
@@ -83,6 +83,6 @@ namespace BlackJack_Demo
         }
     }
 }
-        
+
 
 

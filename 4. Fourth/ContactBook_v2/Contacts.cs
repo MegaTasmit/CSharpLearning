@@ -1,4 +1,4 @@
-﻿namespace FifthVideo
+﻿namespace ContactBook_v2
 {
     public class Contact
     {
@@ -14,5 +14,5 @@
         public string Address { get; set; }
 
     }
-        
+
 }

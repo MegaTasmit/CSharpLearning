@@ -1,21 +1,21 @@
 ﻿using System;
 
-namespace FourthVideo
+namespace Calculator
 {
     public static class Programm
     {
         public static void Main(string[] args)
         {
             decimal savedNumber = 0;
-            bool isContinue = false;
+            bool isContinue = true;
 
-            while (isContinue == false)
+            while (isContinue)
             {
                 decimal firstNumber = 0;
                 string operation = "";
                 decimal secondNumber = 0;
 
-                bool correctFirstNumber = false;
+                bool correctFirstNumber = true;
                 bool correctSecondNumber = true;
 
                 Console.Clear();
@@ -24,32 +24,27 @@ namespace FourthVideo
                 if (savedNumber != 0)
                 {
                     firstNumber = savedNumber;
-                    correctFirstNumber = true;
                 }
                 else
                 {
-                    Console.WriteLine("Введите первое число:");
-                    correctFirstNumber = decimal.TryParse(Console.ReadLine(), out firstNumber);
+                    Console.WriteLine("Первое число:");
+                    string userInput = Console.ReadLine();
+                    correctFirstNumber = decimal.TryParse(userInput, out firstNumber);
                 }
 
-                Console.WriteLine("Введите действие");
+                Console.WriteLine("Действие");
                 operation = Console.ReadLine();
 
                 if (operation.ToLower() != "x" && operation.ToLower() != "y")
                 {
-                    Console.WriteLine("Введите второе число");
+                    Console.WriteLine("Второе число");
                     correctSecondNumber = decimal.TryParse(Console.ReadLine(), out secondNumber);
-                }
-                else if (operation.ToLower() != "y")
-                { 
-                    savedNumber = 0; 
                 }
 
                 bool isNumbersCorrect = correctFirstNumber && correctSecondNumber;
 
-                if (isNumbersCorrect == true)
+                if (isNumbersCorrect)
                 {
-
                     switch (operation.ToLower())
                     {
                         case "+":
@@ -69,12 +64,13 @@ namespace FourthVideo
                             break;
 
                         case "y":
-                            isContinue = true;
-                            Console.WriteLine("Благодарим Вас за использование нашего калькулятора!");
+                            isContinue = false;
+                            Console.WriteLine("Ждем Вашего возвращения ^_^");
                             Thread.Sleep(1000);
                             break;
 
                         case "x":
+                            savedNumber = 0;
                             Console.WriteLine("Сохраненное число обнулено");
                             Thread.Sleep(700);
                             break;
@@ -144,10 +140,11 @@ namespace FourthVideo
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(savedNumber);
 
-            Console.SetCursorPosition(50, 1);
-            Console.Write("x - сбросить число");
-
             Console.SetCursorPosition(50, 2);
+            Console.Write("Команды (Вводятся в поле 'Действие'): ");
+            Console.SetCursorPosition(50, 3);
+            Console.Write("x - сбросить число");
+            Console.SetCursorPosition(50, 4);
             Console.Write("у - Выход");
 
             Console.SetCursorPosition(0, 2);

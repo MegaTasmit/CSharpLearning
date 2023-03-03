@@ -1,4 +1,4 @@
-﻿namespace FifthVideo
+﻿namespace ContactBook_v2
 {
     public class ContactsList
     {
@@ -54,7 +54,7 @@
             {
                 if (_contact[i] == null && _contact[i + 1] != null)
                     (_contact[i], _contact[i + 1]) = (_contact[i + 1], _contact[i]);
-                else if (_contact[i] == null && _contact[i+1] == null)
+                else if (_contact[i] == null && _contact[i + 1] == null)
                     break;
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace SixthVideo
+﻿namespace ToDoList_v1
 {
     public class IssueList
     {
@@ -28,7 +28,7 @@
                 result[i] = _issueList[i];
             }
 
-            return result; 
+            return result;
         }
 
         public void AddIssue(string title)
@@ -40,27 +40,27 @@
         public void DeleteIssue(int index)
         {
             _issueList[index] = null;
-            
+
             for (int i = 0; i < _issueList.Length; i++)
             {
                 if (_issueList[i] == null && _issueList[i + 1] != null)
-                    (_issueList[i], _issueList[i+1]) = (_issueList[i+1], _issueList[i]);
+                    (_issueList[i], _issueList[i + 1]) = (_issueList[i + 1], _issueList[i]);
 
                 if (_issueList[i] == null && _issueList[i + 1] == null)
                     break;
             }
         }
 
-        public void EditTitle (string title, int index)
+        public void EditTitle(string title, int index)
         {
             _issueList[index].Title = title;
-            _issueList[index].DateTime= DateTime.Now;
+            _issueList[index].DateTime = DateTime.Now;
         }
 
-        public void TakeIssue (int index)
+        public void TakeIssue(int index)
         {
             _issueList[index].Status = Status.В_работе;
-            _issueList[index].DateTime= DateTime.Now;
+            _issueList[index].DateTime = DateTime.Now;
         }
 
         public void CompleteIssue(int index)
